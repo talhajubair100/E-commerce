@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.fields.files import ImageField
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 # Create your models here.
@@ -37,7 +38,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=2)
     amount = models.IntegerField()
     minamount=models.IntegerField()
-    detail = models.TextField() 
+    detail = RichTextUploadingField()
     slug = models.SlugField()
     status = models.CharField(max_length=5,choices=STATUS)
     create_at = models.DateTimeField(auto_now_add=True)
