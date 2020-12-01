@@ -1,8 +1,8 @@
 {% extends 'homebase.html' %}
 
-{% block title %} My Home Page {% endblock  %}
-{% block description %} {% endblock  %}
-{% block keywords %}  {% endblock  %}
+{% block title %} {{ setting.title }} {% endblock  %}
+{% block description %} {{ setting.description }} {% endblock  %}
+{% block keywords %} {{ setting.keywords }} {% endblock  %}
 
 
 {% block sidebar %} {% include "sidebar.html" %} {% endblock  %}
