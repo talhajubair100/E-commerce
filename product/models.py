@@ -3,15 +3,15 @@ from django.db.models.fields.files import ImageField
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from ckeditor_uploader.fields import RichTextUploadingField
-
+from mptt.models import MPTTModel, TreeForeignKey
 
 # Create your models here.
-class Category(models.Model):
+class Category(MPTTModel):
     STATUS = (
         ('True', 'True'),
         ('False', 'False'),
     )
-    parent = models.ForeignKey("self", blank=True, null=True, related_name='children', on_delete=models.CASCADE)
+    parent = TreeForeignKey("self", blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     keywords = models.CharField(max_length=200)
     description = models.TextField()
@@ -21,10 +21,14 @@ class Category(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
+
     def __str__(self):
         return self.title
 
-   
+    class MPTTMeta:
+        order_insertion_by = ['title']
+        
+
 class Product(models.Model):
     STATUS = (
         ('True', 'True'),

@@ -1,3 +1,4 @@
+from product.models import Category
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -8,8 +9,9 @@ from .forms import ContactForm
 # Create your views here.
 def index(request):
     setting = Setting.objects.get(pk=1)
+    category = Category.objects.all()
     page = "home"
-    context = {'setting': setting, 'page': page}
+    context = {'setting': setting, 'page': page, 'category': category}
 
     return render(request ,'index.html', context)
 
