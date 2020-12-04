@@ -1,4 +1,5 @@
-from product.models import Category
+from django.http.response import HttpResponse
+from product.models import Category, Product
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -39,3 +40,11 @@ def contact(request):
 
     context = {'setting': setting, 'form': form}
     return render(request, 'contact.html', context)
+
+
+def category_products(request, id, slug):
+    products = Product.objects.filter(category_id=id)
+    # print(product.title)
+    # context = {'product': product}
+    # return render(request, 'category_products.html', context)
+    return HttpResponse(products)
