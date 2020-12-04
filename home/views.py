@@ -11,8 +11,9 @@ from .forms import ContactForm
 def index(request):
     setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
+    product_slider = Product.objects.all().order_by('-id')[:3]
     page = "home"
-    context = {'setting': setting, 'page': page, 'category': category}
+    context = {'setting': setting, 'page': page, 'category': category, 'product_slider': product_slider}
 
     return render(request ,'index.html', context)
 
