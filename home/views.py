@@ -11,9 +11,19 @@ from .forms import ContactForm
 def index(request):
     setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
-    product_slider = Product.objects.all().order_by('-id')[:3]
+    product_slider = Product.objects.all().order_by('-id')[:3] #first 4 products
+    latest_product = Product.objects.all().order_by('-id')[:4] #last 4 products
+    product_picked = Product.objects.all().order_by('?')[:4] #rendom 4 products
+
+
     page = "home"
-    context = {'setting': setting, 'page': page, 'category': category, 'product_slider': product_slider}
+    context = {'setting': setting,
+            'page': page,
+            'category': category,
+            'product_slider': product_slider,
+            'latest_product': latest_product,
+            'product_picked': product_picked,
+            }
 
     return render(request ,'index.html', context)
 
