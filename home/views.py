@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from .models import Setting, ContactMessage
-from .forms import ContactForm
+from .forms import ContactForm, SearchForm 
 
 
 # Create your views here.
@@ -29,12 +29,14 @@ def index(request):
 
 def about(request):
     setting = Setting.objects.get(pk=1)
-    context = {'setting': setting}
+    category = Category.objects.all()
+    context = {'setting': setting, 'category': category}
     return render(request, 'about.html', context)
 
 
 def contact(request):
     setting = Setting.objects.get(pk=1)
+    category = Category.objects.all()
     form = ContactForm
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -49,14 +51,36 @@ def contact(request):
             messages.success(request, "Your Message has been sent, Thank you.")
             return HttpResponseRedirect('/contact')
 
-    context = {'setting': setting, 'form': form}
+    context = {'setting': setting, 'form': form, 'category': category}
     return render(request, 'contact.html', context)
+
+
+def search(request):
+    if request.method == 'POST': # check post
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['query'] # get form input data
+            catid = form.cleaned_data['catid']
+            if catid==0:
+                products=Product.objects.filter(title__icontains=query)  #SELECT * FROM product WHERE title LIKE '%query%'
+            else:
+                products = Product.objects.filter(title__icontains=query,category_id=catid)
+
+            category = Category.objects.all()
+            context = {'products': products, 'query':query,
+                       'category': category }
+            return render(request, 'search_products.html', context)
+
+    return HttpResponseRedirect('/')
+
 
 
 def category_products(request, id, slug):
     category = Category.objects.all()
     products = Product.objects.filter(category_id=id)
+    setting = Setting.objects.get(pk=1)
+
     # print(product.title)
-    context = {'products': products, 'category': category}
+    context = {'products': products, 'category': category, 'setting': setting}
     return render(request, 'category_products.html', context)
     #return HttpResponse(products)
