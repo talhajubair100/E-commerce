@@ -12,6 +12,7 @@ class ContactForm(forms.ModelForm):
             'message' : forms.Textarea(attrs={'class': 'form-control','placeholder':'Your Message','rows':'7'}),
         }
 
+
 class SearchForm(forms.Form):
     query = forms.CharField(max_length=100)
     catid = forms.ImageField()

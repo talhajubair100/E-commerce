@@ -55,23 +55,6 @@ def contact(request):
     return render(request, 'contact.html', context)
 
 
-def search(request):
-    if request.method == 'POST': # check post
-        form = SearchForm(request.POST)
-        if form.is_valid():
-            query = form.cleaned_data['query'] # get form input data
-            catid = form.cleaned_data['catid']
-            if catid==0:
-                products=Product.objects.filter(title__icontains=query)  #SELECT * FROM product WHERE title LIKE '%query%'
-            else:
-                products = Product.objects.filter(title__icontains=query,category_id=catid)
-
-            category = Category.objects.all()
-            context = {'products': products, 'query':query,
-                       'category': category }
-            return render(request, 'search_products.html', context)
-
-    return HttpResponseRedirect('/')
 
 
 
@@ -84,3 +67,38 @@ def category_products(request, id, slug):
     context = {'products': products, 'category': category, 'setting': setting}
     return render(request, 'category_products.html', context)
     #return HttpResponse(products)
+
+
+# def search(request):
+#     if request.method == 'POST': # check post
+#         form = SearchForm(request.POST)
+#         if form.is_valid():
+#             query = form.cleaned_data['query'] # get form input data
+#             catid = form.cleaned_data['catid']
+#             if catid==0:
+#                 products=Product.objects.filter(title__icontains=query)  #SELECT * FROM product WHERE title LIKE '%query%'
+#             else:
+#                 products = Product.objects.filter(title__icontains=query,category_id=catid)
+
+#             category = Category.objects.all()
+#             context = {'products': products, 'query':query,
+#                        'category': category }
+#             return render(request, 'search_products.html', context)
+
+#     return HttpResponseRedirect('/search/')
+
+def search(request):
+    category = Category.objects.all()
+    if request.method == 'POST':
+        query = request.POST['query']
+        catid = request.POST['catid']
+
+        products = Product.objects.filter(title__contains=query, category_id=catid)
+        category = Category.objects.all()
+
+        context = {'products': products, 'query':query,
+                        'category': category }
+        return render(request, 'search_products.html', context)
+
+    return render(request, 'search_products.html', {'category': category})
+    
