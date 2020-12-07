@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from .models import Setting, ContactMessage
 from .forms import ContactForm, SearchForm 
+import json
 
 
 # Create your views here.
@@ -107,3 +108,20 @@ def search(request):
 
     return render(request, 'search_products.html', {'category': category})
     
+
+
+
+def search_auto(request):
+  if request.is_ajax():
+    q = request.GET.get('term', '')
+    products = Product.objects.filter(title__icontains=q)
+    results = []
+    for pro in products:
+      product_json = {}
+      product_json = pro.title
+      results.append(product_json)
+    data = json.dumps(results)
+  else:
+    data = 'fail'
+  mimetype = 'application/json'
+  return HttpResponse(data, mimetype)
