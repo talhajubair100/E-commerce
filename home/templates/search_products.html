@@ -13,7 +13,7 @@
 		<div class="container">
 			<ul class="breadcrumb">
                 <li><a href="{% url 'index' %}">Home</a></li>
-                <li class="active">About Us</li> 
+                <li class="active">{{ query }} result</li> 
 			</ul>
 		</div>
 	</div>
@@ -27,7 +27,7 @@
 			<div class="row">
 
 				<!-- MAIN -->
-				<div id="main" class="col-md-9">
+				<div id="main" class="col-md-12">
 					<!-- store top filter -->
 					<div class="store-filter clearfix">
 						<div class="pull-left">
@@ -73,7 +73,7 @@
                             
                             {% for product in products %}
                               
-							<div class="col-md-4 col-sm-6 col-xs-6">
+							<div class="col-md-3 col-sm-6 col-xs-6">
 								<div class="product product-single">
 									<div class="product-thumb">
 										<a href="/product/{{ product.id }}/{{ product.slug }}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
@@ -96,7 +96,8 @@
 										</div>
 									</div>
 								</div>
-                            </div>
+							</div>
+							<br>
 
                             {% endfor %}
 

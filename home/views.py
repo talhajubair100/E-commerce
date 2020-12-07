@@ -88,17 +88,22 @@ def category_products(request, id, slug):
 #     return HttpResponseRedirect('/search/')
 
 def search(request):
-    category = Category.objects.all()
     if request.method == 'POST':
-        query = request.POST['query']
-        catid = request.POST['catid']
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            catid = form.cleaned_data['catid']
+            if catid==0:
+                products = Product.objects.filter(title__contains=query)
+            else:
+                products = Product.objects.filter(title__contains=query, category_id=catid)
+            category = Category.objects.all()
 
-        products = Product.objects.filter(title__contains=query, category_id=catid)
-        category = Category.objects.all()
-
-        context = {'products': products, 'query':query,
-                        'category': category }
-        return render(request, 'search_products.html', context)
+            context = {'products': products, 'query':query,
+                            'category': category }
+            return render(request, 'search_products.html', context)
+            
+    category = Category.objects.all()
 
     return render(request, 'search_products.html', {'category': category})
     

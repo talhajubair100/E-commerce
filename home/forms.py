@@ -15,4 +15,4 @@ class ContactForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     query = forms.CharField(max_length=100)
-    catid = forms.ImageField()
+    catid = forms.IntegerField()

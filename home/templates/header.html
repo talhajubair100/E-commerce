@@ -54,6 +54,8 @@
 							{% csrf_token %}
 							<input id="query" name="query" class="input search-input" type="text" placeholder="Enter your keyword">
 							<select name="catid" class="input search-categories">
+								<option value="0">All Category</option>
+
 								{% for ctg in category %}
 
 								<option value="{{ ctg.id }}">{{ ctg.title }}</option>
