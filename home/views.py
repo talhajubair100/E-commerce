@@ -1,5 +1,5 @@
 from django.http.response import HttpResponse
-from product.models import Category, Product
+from product.models import Category, Product, Images
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -57,8 +57,6 @@ def contact(request):
 
 
 
-
-
 def category_products(request, id, slug):
     category = Category.objects.all()
     products = Product.objects.filter(category_id=id)
@@ -68,6 +66,15 @@ def category_products(request, id, slug):
     context = {'products': products, 'category': category, 'setting': setting}
     return render(request, 'category_products.html', context)
     #return HttpResponse(products)
+
+
+def product_detail(request, id, slug):
+    category = Category.objects.all()
+    product = Product.objects.get(pk=id)
+    images = Images.objects.filter(product_id=id)
+    # print(product.title)
+    context = {'product': product, 'category': category, 'images': images}
+    return render(request, 'product_detail.html', context)
 
 
 # def search(request):
