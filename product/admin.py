@@ -1,7 +1,7 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
 # Register your models here.
-from .models import Category, Product, Images
+from .models import Category, Product, Images, Comment
 
 class ImageInLine(admin.StackedInline):
     model = Images
@@ -56,4 +56,6 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin2)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Images)
+admin.site.register(Comment)
+
 
