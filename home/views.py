@@ -74,7 +74,8 @@ def product_detail(request, id, slug):
     images = Images.objects.filter(product_id=id)
     # print(product.title)
     comment = Comment.objects.filter(product_id=id, status=True)
-    context = {'product': product, 'category': category, 'images': images, 'comment': comment}
+    cmt_count = Comment.objects.filter(product_id=id, status=True).count()
+    context = {'product': product, 'category': category, 'images': images, 'comment': comment, 'cmt_count': cmt_count}
     return render(request, 'product_detail.html', context)
 
 
