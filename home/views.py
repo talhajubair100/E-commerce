@@ -1,5 +1,5 @@
 from django.http.response import HttpResponse
-from product.models import Category, Product, Images
+from product.models import Category, Comment, Product, Images
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -73,7 +73,8 @@ def product_detail(request, id, slug):
     product = Product.objects.get(pk=id)
     images = Images.objects.filter(product_id=id)
     # print(product.title)
-    context = {'product': product, 'category': category, 'images': images}
+    comment = Comment.objects.filter(product_id=id, status=True)
+    context = {'product': product, 'category': category, 'images': images, 'comment': comment}
     return render(request, 'product_detail.html', context)
 
 
