@@ -36,11 +36,11 @@
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star-o empty"></i>
                         </div>
-                        <h2 class="product-name"><a href="#">{{ product.title }}</a></h2>
+                        <h2 class="product-name"><a href="/product/{{ product.id }}/{{ product.slug }}">{{ product.title }}</a></h2>
                         <div class="product-btns">
                             <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                             <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                            <a href="/product/{{ product.id }}/{{ product.slug }}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                            <a href="/order/add_to_shopcart/{{ product.id }}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
             {% endfor %}
 
             <!-- /Product Single -->
-
+            
 
         </div>
         <!-- /row -->
@@ -84,11 +84,11 @@
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star-o empty"></i>
                         </div>
-                        <h2 class="product-name"><a href="#">{{ pick_pro.title }}</a></h2>
+                        <h2 class="product-name"><a href="/product/{{ pick_pro.id }}/{{ pick_pro.slug }}">{{ pick_pro.title }}</a></h2>
                         <div class="product-btns">
                             <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                             <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                            <a href="/product/{{ pick_pro.id }}/{{ pick_pro.slug }}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                            <a href="/order/add_to_shopcart/{{ product.id }}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
                         </div>
                     </div>
                 </div>
