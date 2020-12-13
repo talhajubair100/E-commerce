@@ -1,9 +1,10 @@
 from django.contrib import messages
 from .models import ShopCart
 from django.http.response import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from .forms import ShopCartForm
+from product.models import Category
 
 # Create your views here.
 def order(request):
@@ -32,7 +33,7 @@ def add_to_shopcart(request, id):
                 data = ShopCart()
                 data.user_id = current_user.id
                 data.product_id = id
-                data.quantity = form.changed_data['quantity']
+                data.quantity = form.cleaned_data['quantity']
                 data.save()
         messages.success(request, "Product added to Shopcart")
         return HttpResponseRedirect(url)
@@ -50,3 +51,12 @@ def add_to_shopcart(request, id):
             data.save()
         messages.success(request, "Product added to Shopcart")
         return HttpResponseRedirect(url)
+
+def shopcart(request):
+    category = Category.objects.all()
+    current_user = request.user
+    shopcart = ShopCart.objects.filter(user_id=current_user.id)
+
+    context = { 'category': category, 'shopcart': shopcart}
+    return render(request, 'shopcart_products.html', context)
+
