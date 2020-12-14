@@ -52,6 +52,8 @@ def add_to_shopcart(request, id):
         messages.success(request, "Product added to Shopcart")
         return HttpResponseRedirect(url)
 
+
+@login_required
 def shopcart(request):
     category = Category.objects.all()
     current_user = request.user
@@ -63,4 +65,11 @@ def shopcart(request):
 
     context = { 'category': category, 'shopcart': shopcart, 'total': total}
     return render(request, 'shopcart_products.html', context)
+
+@login_required
+def delete_from_shopcart(request, id):
+    ShopCart.objects.filter(id=id).delete()
+    messages.success(request, "Your item deleted form Shopcart.")
+    return HttpResponseRedirect("/order/shopcart")
+
 
