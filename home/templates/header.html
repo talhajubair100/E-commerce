@@ -120,7 +120,7 @@
 								
 							<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
 								<div class="header-btns-icon">
-									<i class="fa fa-user-o"></i>
+									<img src="{{ request.session.userimage }}" style="height: 40px; border-radius: 30%">
 								</div>
 								<strong class="text-uppercase">{{ user.first_name }} <i class="fa fa-caret-down"></i></strong>
 							</div>
@@ -132,7 +132,7 @@
 								<li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
 								<li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
 								<li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
-								<li><a href="#"><i class="fa fa-unlock-alt"></i> Login</a></li>
+								<li><a href="{% url 'logout_view' %}"><i class="fa fa-unlock-alt"></i> Logout</a></li>
 								<li><a href="#"><i class="fa fa-user-plus"></i> Create An Account</a></li>
 							</ul>
 							

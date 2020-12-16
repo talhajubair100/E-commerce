@@ -39,6 +39,7 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('login/', UserViews.login_view, name='login_view'),
+    path('logout/', UserViews.logout_view, name='logout_view'),
     path('signup/', UserViews.signup_view, name='signup_view'),
 
 
