@@ -22,6 +22,8 @@ from django.conf.urls.static import static
 import home
 from home.views import about
 from home import views
+from user import views as UserViews
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +38,10 @@ urlpatterns = [
     path('order/', include('order.urls')),
     path('user/', include('user.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('login/', UserViews.login_view, name='login_view'),
+    path('signup/', UserViews.signup_view, name='signup_view'),
+
+
     
 
 ]
