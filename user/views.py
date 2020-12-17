@@ -50,7 +50,16 @@ def signup_view(request):
             user = authenticate(username=username, password=password)
             login(request, user)
 
-            return HttpResponseRedirect("/")
+            # Create data in profile table for user
+            current_user = request.user
+            data=UserProfile()
+            data.user_id=current_user.id
+            data.image="media/users/user.jpg"
+            data.save()
+            messages.success(request, 'Your account has been created!')
+          
+
+            return HttpResponseRedirect("/login/")
         else:
             messages.warning(request,form.errors)
             return HttpResponseRedirect('/signup')
