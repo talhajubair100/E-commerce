@@ -6,10 +6,10 @@ from django.utils.safestring import mark_safe
 # Create your models here.
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone = models.CharField(blank=True, max_length=15)
-    address = models.CharField(blank=True, max_length=150)
-    city = models.CharField(blank=True, max_length=50)
-    country = models.CharField(blank=True, max_length=50)
+    phone = models.CharField(blank=True, null=True, max_length=15)
+    address = models.CharField(blank=True, null=True, max_length=150)
+    city = models.CharField(blank=True, null=True, max_length=50)
+    country = models.CharField(blank=True, null=True, max_length=50)
     image = models.ImageField(blank=True, upload_to='media/users/')
 
     def __str__(self):

@@ -1,3 +1,4 @@
+from user.forms import SignUpForm
 from django.shortcuts import render
 from django.http.response import HttpResponse, HttpResponseRedirect
 from product.models import Category
@@ -37,6 +38,27 @@ def logout_view(request):
 
 
 def signup_view(request):
-    return HttpResponse("Signup view")
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()  #signup complete here
+            
+            
+            # this code for auto login 
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+
+            return HttpResponseRedirect("/")
+        else:
+            messages.warning(request,form.errors)
+            return HttpResponseRedirect('/signup')
+    
+    form = SignUpForm()
+    category = Category.objects.all()
+    context = {'category': category, 'form': form}
+
+    return render (request, 'signup.html', context)
 
 
