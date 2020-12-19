@@ -127,7 +127,7 @@ def orderproduct(request):
             ShopCart.objects.filter(user_id=current_user.id).delete()
             request.session['cart_items']=0
             messages.success(request, "your order is done")
-            return render(request, 'order_form.html', {'category': category})
+            return render(request, 'order_complete.html', {'category': category})
         else:
             messages.warning(request, form.errors)
             return HttpResponseRedirect("/order/orderproduct")
