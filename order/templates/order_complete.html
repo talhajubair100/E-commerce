@@ -1,7 +1,7 @@
 
 {% extends 'homebase.html' %}
 
-{% block title %} Shop Cart {% endblock  %}
+{% block title %} Order Complete {% endblock  %}
 {% block description %} {{ setting.description }} {% endblock  %}
 {% block keywords %} {{ setting.keywords }} {% endblock  %}
 
@@ -13,7 +13,7 @@
 		<div class="container">
 			<ul class="breadcrumb">
                 <li><a href="{% url 'index' %}">Home</a></li>
-                <li class="active">ShopCart</li> 
+                <li class="active">Order Complete</li> 
 			</ul>
 		</div>
 	</div>
@@ -25,9 +25,24 @@
 		<div class="container">
 			<!-- row -->
 			<div class="row">
+                <div class="col-md-12">
+					<div class="order-summary clearfix">
+						<div class="section-title">
+							<h3 class="title">Order Complete</h3>
+                        </div>
+                        <hr>
+                        <hr>
+                        <h2>Dear  {{ user.first_name }} {{  user.last_name }}</h2>
+                        <hr>
+                        <h3>Your order is completed</h3>
+                        <h3>Order Code : {{ ordercode }}</h3>
+                        <h3>Thank You</h3>
+                        <hr>
 
-                <h1>Thanks for the order</h1>
-                
+						
+					</div>
+
+				</div>
 			</div>
 			<!-- /row -->
 		</div>
