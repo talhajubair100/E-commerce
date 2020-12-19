@@ -29,4 +29,5 @@ class CardInfoForm(forms.Form):
     card_holder_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Card Holder Number'}))
     card_expire_date = forms.CharField(widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'mm/yy'}))
     card_security_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'input', 'placeholder': 'Security Number'}))
+    
 

@@ -25,7 +25,8 @@
 		<div class="container">
 			<!-- row -->
 			<div class="row">
-                <form action="">
+                <form action="" method="POST">
+					{% csrf_token %}
                     <div class="col-md-6">
 						<div class="billing-details">
 
@@ -49,7 +50,7 @@
                                 <h4 class="title">Payment Information</h4>
 							</div>
 							
-							{{ form2.as_p }}
+							<!-- {{ form2.as_p }} -->
 							<h4 class="title" readonly>Total: {{ total }} USD </h4>
 						</div>
                         
@@ -69,7 +70,6 @@
 									<th class="text-center">Price</th>
 									<th class="text-center">Quantity</th>
 									<th class="text-center">Total</th>
-									<th class="text-right"></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -87,7 +87,6 @@
 									<td class="price text-center"><strong>${{  item.product.price }}</strong></td>
 									<td class="qty text-center"><strong>{{  item.quantity }}</strong></td>
 									<td class="total text-center"><strong class="primary-color">${{ item.amount }}</strong></td>
-									<td class="text-right"><a href="/order/delete_from_shopcart/{{ item.id }}" onclick="return confirm('Delete ! Are you sure?')" class="main-btn icon-btn"><i class="fa fa-close"></i></a></td>
 								</tr>
 
 								{% endfor %}
