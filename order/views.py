@@ -1,9 +1,11 @@
+from user.models import UserProfile
 from django.contrib import messages
+from django.contrib.auth.models import User
 from .models import ShopCart
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-from .forms import ShopCartForm
+from .forms import ShopCartForm, OrderForm
 from product.models import Category
 
 # Create your views here.
@@ -73,3 +75,25 @@ def delete_from_shopcart(request, id):
     return HttpResponseRedirect("/order/shopcart")
 
 
+def orderproduct(request):
+    current_user = request.user
+    profile = UserProfile.objects.get(user_id=current_user.id)
+
+    data = {'first_name': current_user.first_name,
+         'last_name': current_user.last_name,
+         'address': profile.address,
+         'phone': profile.phone,
+         'city': profile.city,
+         'country': profile.country}
+    form = OrderForm(initial=data)
+       
+    category = Category.objects.all()
+    current_user = request.user
+    shopcart = ShopCart.objects.filter(user_id=current_user.id)
+    total = 0
+    for rs in shopcart:
+        total += rs.product.price * rs.quantity 
+       
+
+    context = { 'category': category, 'shopcart': shopcart, 'total': total, 'form': form}
+    return render(request, 'order_form.html', context)
