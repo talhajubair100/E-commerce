@@ -33,7 +33,9 @@
                                 <h4 class="title">Shipping Details</h4>
 							</div>
 							{{ form.as_p }}
-
+							<div class="pull-right">
+                                <button  type="submit" class="primary-btn">Complete Order</button>
+                            </div>
 
 						</div>
 							
@@ -41,6 +43,15 @@
 					
 
                     <div class="col-md-6">
+
+						<div class="shiping-methods">
+                            <div class="section-title">
+                                <h4 class="title">Payment Information</h4>
+							</div>
+							
+							{{ form2.as_p }}
+							<h4 class="title" readonly>Total: {{ total }} USD </h4>
+						</div>
                         
                     </div>
                  </form>

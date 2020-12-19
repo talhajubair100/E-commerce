@@ -5,7 +5,7 @@ from .models import ShopCart
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-from .forms import ShopCartForm, OrderForm
+from .forms import ShopCartForm, OrderForm, CardInfoForm
 from product.models import Category
 
 # Create your views here.
@@ -86,6 +86,7 @@ def orderproduct(request):
          'city': profile.city,
          'country': profile.country}
     form = OrderForm(initial=data)
+    form2 = CardInfoForm()
        
     category = Category.objects.all()
     current_user = request.user
@@ -95,5 +96,5 @@ def orderproduct(request):
         total += rs.product.price * rs.quantity 
        
 
-    context = { 'category': category, 'shopcart': shopcart, 'total': total, 'form': form}
+    context = { 'category': category, 'shopcart': shopcart, 'total': total, 'form': form, 'form2': form2}
     return render(request, 'order_form.html', context)
