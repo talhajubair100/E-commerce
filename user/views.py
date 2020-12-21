@@ -1,4 +1,4 @@
-from user.forms import SignUpForm
+from .forms import SignUpForm, UserUpdateForm, ProfileUpdateForm
 from django.shortcuts import render
 from django.http.response import HttpResponse, HttpResponseRedirect
 from product.models import Category
@@ -16,6 +16,15 @@ def user_profile(request):
     profile = UserProfile.objects.get(user_id=current_user.id)
     context = {'category': category, 'profile': profile}
     return render(request, 'user_profile.html', context)
+
+
+def user_update(request):
+    user_form = UserUpdateForm(instance=request.user)
+    profile_form = ProfileUpdateForm(instance=request.user.userprofile)
+    category = Category.objects.all()
+    context = {'user_form': user_form, 'profile_form': profile_form, 'category': category}
+    return render(request, 'user_update.html', context)
+
 
 
 
