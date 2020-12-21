@@ -128,12 +128,14 @@
 							<a href="{% url 'login_view' %}" class="text-uppercase">Login</a> / <a href="{% url 'signup_view' %}" class="text-uppercase">Sign Up</a>
 							{% endif %}
 							<ul class="custom-menu">
-								<li><a href="{% url 'user_profile' %}"><i class="fa fa-user-o"></i> My Account</a></li>
-								<li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
-								<li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
-								<li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
-								<li><a href="{% url 'logout_view' %}"><i class="fa fa-unlock-alt"></i> Logout</a></li>
-								<li><a href="#"><i class="fa fa-user-plus"></i> Create An Account</a></li>
+
+								<li><a href="{% url 'user_profile' %}">User Profile</a></li>
+								<li><a href="/user/orders">My Orders</a></li>
+								<li><a href="/user/orders_product">My Order Product</a></li>
+								<li><a href="/user/comments">My Comments</a></li>
+								<li><a href="/user/favorits">My Favorits</a></li>
+								<li><a href="/user/products">My Products</a></li>
+								<li><a href="{% url 'logout_view' %}">Logout</a></li>
 							</ul>
 							
 						</li>
