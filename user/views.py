@@ -5,10 +5,17 @@ from product.models import Category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from.models import UserProfile
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
+@login_required
 def user_profile(request):
-    return HttpResponse("User")
+    category = Category.objects.all()
+    current_user = request.user
+    profile = UserProfile.objects.get(user_id=current_user.id)
+    context = {'category': category, 'profile': profile}
+    return render(request, 'user_profile.html', context)
 
 
 
