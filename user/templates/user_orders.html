@@ -60,7 +60,7 @@
                                     <td class="text-left">{{ order_obj.status }}</td>
 									<td class="text-left">{{ order_obj.code }}</td>
                                     <td class="text-left">{{ order_obj.create_at }}</td>
-									<td class="text-left"><a class="primary-btn" href="#"> Detail </a></td>
+									<td class="text-left"><a class="primary-btn" href="{% url 'order_details' order_obj.id %}"> Detail </a></td>
                                     
                                     
                                     

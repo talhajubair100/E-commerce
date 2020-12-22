@@ -6,7 +6,7 @@ from product.models import Category
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from.models import UserProfile
-from order.models import Order
+from order.models import Order, OrderProduct
 from django.contrib.auth.decorators import login_required
 
 
@@ -63,6 +63,15 @@ def user_orders(request):
 
     context = {'category': category, 'orders': orders}
     return render(request, 'user_orders.html', context)
+
+@login_required
+def order_details(request, id):
+    category = Category.objects.all()
+    current_user = request.user
+    orders = Order.objects.get(user_id=current_user.id, id=id)
+    orderitems = OrderProduct.objects.filter(order_id=id)
+    context = {'category': category, 'orders': orders, 'orderitems': orderitems}
+    return render(request, 'user_order_detail.html', context)
 
 
 
