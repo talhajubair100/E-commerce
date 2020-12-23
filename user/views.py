@@ -84,6 +84,15 @@ def user_orders_product(request):
     return render(request, 'user_orders_product.html', context)
 
 
+@login_required
+def user_order_product_details(request, id, oid):
+    category = Category.objects.all()
+    current_user = request.user
+    orders = Order.objects.get(user_id=current_user.id, id=oid)
+    orderitems = OrderProduct.objects.filter(id=id, user_id=current_user.id)
+    context = {'category': category, 'orderitems': orderitems, 'orders': orders}
+    return render(request, 'user_order_detail.html', context)
+
 
 
 def login_view(request):
