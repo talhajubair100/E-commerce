@@ -102,6 +102,12 @@ def user_comments(request):
     context = {'category': category, 'comments': comments}
     return render(request, 'user_comments.html', context)
 
+@login_required
+def user_delete_comment(request, id):
+    current_user = request.user
+    Comment.objects.filter(id=id ,user_id=current_user.id).delete()
+    messages.success(request, "Secessfully delete comment....")
+    return HttpResponseRedirect('user/comments/')
 
 
 def login_view(request):

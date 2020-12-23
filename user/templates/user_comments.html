@@ -42,7 +42,6 @@
                                     <th class="text-left">Rating</th>
                                     <th class="text-left">Subject</th>
                                     <th class="text-left">Comment</th>
-                                    <th class="text-left">Status</th>
                                     <th class="text-left">Date</th>
                                     <th class="text-left">Delete</th>
 
@@ -54,13 +53,14 @@
 								{% for user_comment in comments %}
 								  
 								<tr>
-                                    <td class="text-left">{{ user_comment.product }}</td>
+                                    <td class="text-left"><a href="{% url 'product_detail' user_comment.product_id user_comment.product.slug %}">
+                                        <strong>{{ user_comment.product.title }}</strong>
+                                    </a></td>
                                     <td class="text-left">{{ user_comment.rate }}</td>
 									<td class="text-left">{{ user_comment.subject }}</td>
                                     <td class="text-left">{{ user_comment.comment }}</td>
-									<td class="text-left">{{ user_comment.status }}</td>
                                     <td class="text-left">{{ user_comment.create_at }}</td>
-									<td class="text-left"><a class="primary-btn" href="#"> Delete </a></td>
+									<td class="text-left"><a class="primary-btn" href="{% url 'user_delete_comment' user_comment.id %}" onclick="return confirm('Will be Delete ! Are you sure?')"> Delete </a></td>
                                     
                                     
                                     
