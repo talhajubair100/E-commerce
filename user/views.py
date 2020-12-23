@@ -2,10 +2,10 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .forms import SignUpForm, UserUpdateForm, ProfileUpdateForm
 from django.shortcuts import redirect, render
 from django.http.response import HttpResponse, HttpResponseRedirect
-from product.models import Category
+from product.models import Category, Comment
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
-from.models import UserProfile
+from .models import UserProfile
 from order.models import Order, OrderProduct
 from django.contrib.auth.decorators import login_required
 
@@ -92,6 +92,15 @@ def user_order_product_details(request, id, oid):
     orderitems = OrderProduct.objects.filter(id=id, user_id=current_user.id)
     context = {'category': category, 'orderitems': orderitems, 'orders': orders}
     return render(request, 'user_order_detail.html', context)
+
+
+@login_required
+def user_comments(request):
+    category = Category.objects.all()
+    current_user = request.user
+    comments = Comment.objects.filter(user_id=current_user.id)
+    context = {'category': category, 'comments': comments}
+    return render(request, 'user_comments.html', context)
 
 
 

@@ -1,0 +1,87 @@
+
+{% extends 'homebase.html' %}
+
+{% block title %} User Comments {% endblock  %}
+{% block description %} {{ setting.description }} {% endblock  %}
+{% block keywords %} {{ setting.keywords }} {% endblock  %}
+
+{% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
+{% block body %} 
+
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb">
+		<div class="container">
+			<ul class="breadcrumb">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li class="active">User Comments</li> 
+			</ul>
+		</div>
+	</div>
+	<!-- /BREADCRUMB -->
+
+    	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-3">
+                   {% include "user_panel.html" %}
+
+                </div>
+
+				<div class="col-md-9">
+					<div class="order-summary clearfix">
+						<div class="section-title">
+							<h3 class="title">User Comment List</h3>
+						</div>
+						<table class="shopping-cart-table table">
+							<thead>
+								<tr>
+                                    <th class="text-left">Product</th>
+                                    <th class="text-left">Rating</th>
+                                    <th class="text-left">Subject</th>
+                                    <th class="text-left">Comment</th>
+                                    <th class="text-left">Status</th>
+                                    <th class="text-left">Date</th>
+                                    <th class="text-left">Delete</th>
+
+
+
+								</tr>
+							</thead>
+							<tbody>
+								{% for user_comment in comments %}
+								  
+								<tr>
+                                    <td class="text-left">{{ user_comment.product }}</td>
+                                    <td class="text-left">{{ user_comment.rate }}</td>
+									<td class="text-left">{{ user_comment.subject }}</td>
+                                    <td class="text-left">{{ user_comment.comment }}</td>
+									<td class="text-left">{{ user_comment.status }}</td>
+                                    <td class="text-left">{{ user_comment.create_at }}</td>
+									<td class="text-left"><a class="primary-btn" href="#"> Delete </a></td>
+                                    
+                                    
+                                    
+								</tr>
+
+								{% endfor %}
+								
+							</tbody>
+							
+						</table>
+						
+					</div>
+
+				</div>
+
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+    <!-- /section -->
+    
+
+{% endblock  %}
