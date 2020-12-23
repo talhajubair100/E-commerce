@@ -75,6 +75,16 @@ def order_details(request, id):
 
 
 
+@login_required
+def user_orders_product(request):
+    category = Category.objects.all()
+    current_user = request.user
+    order_product = OrderProduct.objects.filter(user_id=current_user.id).order_by('-id')
+    context = {'category': category, 'order_product': order_product}
+    return render(request, 'user_orders_product.html', context)
+
+
+
 
 def login_view(request):
     if request.method == 'POST':

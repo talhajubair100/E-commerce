@@ -1,7 +1,7 @@
 
 {% extends 'homebase.html' %}
 
-{% block title %} Order Detail {% endblock  %}
+{% block title %} Order Products {% endblock  %}
 {% block description %} {{ setting.description }} {% endblock  %}
 {% block keywords %} {{ setting.keywords }} {% endblock  %}
 
@@ -13,7 +13,7 @@
 		<div class="container">
 			<ul class="breadcrumb">
                 <li><a href="{% url 'index' %}">Home</a></li>
-                <li class="active">Order Detail</li> 
+                <li class="active">Order Products</li> 
 			</ul>
 		</div>
 	</div>
@@ -33,47 +33,9 @@
 				<div class="col-md-9">
 					<div class="order-summary clearfix">
 						<div class="section-title">
-							<h3 class="title">Order Detail</h3>
+							<h3 class="title">Order Products</h3>
                         </div>
                         
-
-                        <table class="shopping-cart-table table">
-                            <tr>
-                                <th class="text-left">Name Surname</th>
-                                <td class="text-left">{{ orders.first_name}} {{ orders.last_name }} </td>
-                            </tr>
-                            <tr>
-                                <th class="text-left">Phone</th>
-                                <td class="text-left">{{ orders.phone}}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-left">Addres</th>
-                                <td class="text-left">{{ orders.address}}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-left">City</th>
-                                <td class="text-left">{{ orders.city}}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-left">Country</th>
-                                <td class="text-left">{{ orders.country}}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-left">Status</th>
-                                <td class="text-left">{{ orders.status}}</td>
-                            </tr>
-
-                            <tr>
-                                <th class="text-left">Date</th>
-                                <td class="text-left">{{ orders.create_at}}</td>
-                            </tr>
-
-                            <th class="text-left">Shipping Inf</th>
-                            <td class="text-left">{{ orders.admin_note}}</td>
-                            </tr>
-
-                        </table>
-
 
                         <div class="section-title">
                             <h4 class="title">Order Item List</h4>
@@ -81,15 +43,17 @@
 
                         <table class="shopping-cart-table table">
                             <tr>
-                                <th class="text-left">Image</th>
+                                <th class="text-left">Image </th>
                                 <th class="text-left">Product Name </th>
                                 <th class="text-left">Price </th>
                                 <th class="text-left">Qauatity </th>
                                 <th class="text-left">Amount </th>
                                 <th class="text-left">Status </th>
                                 <th class="text-left">Date </th>
+                                <th class="text-left">Detail </th>
+
                             </tr>
-                            {% for item in orderitems %}
+                            {% for item in order_product %}
                                 <tr>
                                     <td class="text-left">
                                         <a href="/product/{{ item.product_id }}/{{ item.product.slug }}">
@@ -98,10 +62,12 @@
                                     </td>
                                     <td class="text-left">{{ item.product.title}}</td>
                                     <td class="text-left">{{ item.price}} </td>
-                                    <td class="text-left"> X {{ item.quantity}} </td>
+                                    <td class="text-left">{{ item.quantity}} </td>
                                     <td class="text-left">{{ item.amount}} </td>
                                     <td class="text-left">{{ item.status}} </td>
                                     <td class="text-left">{{ item.create_at}} </td>
+                                    <td class="text-left"><a class="primary-btn" href="{% url 'order_details' item.id %}"> Detail </a></td>
+
                                 </tr>
                             {% endfor %}
 
