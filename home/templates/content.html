@@ -30,11 +30,12 @@
                     <div class="product-body">
                         <h3 class="product-price">${{ product.price }}</h3>
                         <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o empty"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
+                            {{ product.avaregereview | stringformat:".2f" }}/{{ product.counterview }}
                         </div>
                         <h2 class="product-name"><a href="/product/{{ product.id }}/{{ product.slug }}">{{ product.title }}</a></h2>
                         <div class="product-btns">
@@ -83,7 +84,7 @@
                             <i class="fa fa-star{% if pick_pro.avaregereview < 3 %}-o empty{% endif %}"></i>
                             <i class="fa fa-star{% if pick_pro.avaregereview < 4 %}-o empty{% endif %}"></i>
                             <i class="fa fa-star{% if pick_pro.avaregereview < 5 %}-o empty{% endif %}"></i>
-                            {{ pick_pro.avaregereview }}/{{ pick_pro.counterview }}
+                            {{ pick_pro.avaregereview | stringformat:".2f" }}/{{ pick_pro.counterview }}
                         </div>
                         <h2 class="product-name"><a href="/product/{{ pick_pro.id }}/{{ pick_pro.slug }}">{{ pick_pro.title }}</a></h2>
                         <div class="product-btns">
