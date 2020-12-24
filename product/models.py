@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.aggregates import Avg
 from django.db.models.fields.files import ImageField
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -71,6 +72,13 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('category_detail', kwargs={'slug': self.slug})
+
+    def avaregereview(self):
+        reviews = Comment.objects.filter(product=self).aggregate(avarage=Avg('rate'))
+        avg = 0
+        if reviews["avarage"] is not None:
+            avg = float(reviews["avarage"])
+        return avg
 
 
 class Images(models.Model):
