@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.aggregates import Avg
+from django.db.models.aggregates import Avg, Count
 from django.db.models.fields.files import ImageField
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -74,11 +74,20 @@ class Product(models.Model):
         return reverse('category_detail', kwargs={'slug': self.slug})
 
     def avaregereview(self):
-        reviews = Comment.objects.filter(product=self).aggregate(avarage=Avg('rate'))
+        reviews = Comment.objects.filter(product=self, status='True').aggregate(avarage=Avg('rate'))
         avg = 0
         if reviews["avarage"] is not None:
             avg = float(reviews["avarage"])
         return avg
+
+    def counterview(self):
+        reviews = Comment.objects.filter(product=self).aggregate(count=Count('id'))
+        cnt = 0
+        if reviews["count"] is not None:
+            cnt = int(reviews["count"])
+        return cnt
+
+
 
 
 class Images(models.Model):
@@ -92,7 +101,7 @@ class Images(models.Model):
 
 class Comment(models.Model):
     STATUS = (
-        ('New', 'New'),
+        
         ('True', 'True'),
         ('False', 'False'),
     )
@@ -102,7 +111,7 @@ class Comment(models.Model):
     comment = models.TextField(blank=True)
     rate = models.IntegerField(default=1)
     ip = models.CharField(max_length=50, blank=True)
-    status = models.CharField(max_length=50, choices=STATUS, default='New')
+    status = models.CharField(max_length=50, choices=STATUS, default='True')
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
