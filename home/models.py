@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 
@@ -54,3 +55,19 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return self.name
+
+class FAQ(models.Model):
+    STATUS = (
+        ('True', 'True'),
+        ('False', 'False'),
+
+    )
+    order_number = models.IntegerField()
+    question = models.CharField(max_length=200)
+    answer = RichTextUploadingField()
+    status = models.CharField(max_length=5, choices=STATUS)
+    create_at=models.DateTimeField(auto_now_add=True)
+    update_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.question

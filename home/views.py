@@ -3,7 +3,7 @@ from product.models import Category, Comment, Product, Images
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from .models import Setting, ContactMessage
+from .models import FAQ, Setting, ContactMessage
 from .forms import ContactForm, SearchForm 
 import json
 
@@ -134,3 +134,13 @@ def search_auto(request):
     data = 'fail'
   mimetype = 'application/json'
   return HttpResponse(data, mimetype)
+
+
+def faq(request):
+    category = Category.objects.all()
+    faq = FAQ.objects.filter(status="True").order_by("order_number")
+    context = {
+        "category": category,
+        "faq": faq,
+    }
+    return render(request, 'faq.html', context)
