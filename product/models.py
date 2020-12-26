@@ -48,6 +48,15 @@ class Product(models.Model):
         ('True', 'True'),
         ('False', 'False'),
     )
+
+    VARIANTS = (
+        ('None', 'None'),
+        ('Size', 'Size'),
+        ('Color', 'Color'),
+        ('Size-Color', 'Size-Color'),
+
+    )
+
     title = models.CharField(max_length=150)
     keywords = models.CharField(max_length=200)
     category = models.ForeignKey(Category , on_delete=models.CASCADE)
@@ -56,6 +65,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=2)
     amount = models.IntegerField()
     minamount=models.IntegerField()
+    variant = models.CharField(max_length=10, choices=VARIANTS, default='None')
     detail = RichTextUploadingField()
     slug = models.SlugField(null=False, unique=True)
     status = models.CharField(max_length=5,choices=STATUS)
@@ -119,4 +129,15 @@ class Comment(models.Model):
         return self.subject
     
 
+class Color(models.Model):
+    name = models.CharField(max_length=50)
+    code = models.CharField(max_length=50, blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+    
+    def color_tag(self):
+        if self.code is not None:
+            return mark_safe('<p style="background-color:{}">Color </p>'.format(self.code))
+        else:
+            return ""
