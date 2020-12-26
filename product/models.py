@@ -141,3 +141,10 @@ class Color(models.Model):
             return mark_safe('<p style="background-color:{}">Color </p>'.format(self.code))
         else:
             return ""
+
+class Size(models.Model):
+    name = models.CharField(max_length=50)
+    code = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return self.name

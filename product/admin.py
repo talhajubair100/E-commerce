@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.db.models.expressions import Col
 from mptt.admin import DraggableMPTTAdmin
 # Register your models here.
-from .models import Category, Product, Images, Comment, Color
+from .models import Category, Product, Images, Comment, Color, Size
 
 class ImageInLine(admin.StackedInline):
     model = Images
@@ -49,6 +49,9 @@ class CategoryAdmin(admin.ModelAdmin):
 class ColorAdmin(admin.ModelAdmin):
     list_display = ['name', 'code', 'color_tag']
 
+class SizeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'code']
+
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'status', 'image_tag']
     list_filter = ['category']
@@ -65,6 +68,7 @@ admin.site.register(Category, CategoryAdmin2)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Images)
 admin.site.register(Color, ColorAdmin)
+admin.site.register(Size, SizeAdmin)
 admin.site.register(Comment, CommentAdmin)
 
 
