@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.aggregates import Avg, Count
+from django.db.models.expressions import Col
 from django.db.models.fields.files import ImageField
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -148,3 +149,30 @@ class Size(models.Model):
 
     def __str__(self):
         return self.name
+
+class Variants(models.Model):
+    title = models.CharField(max_length=150, blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    color = models.ForeignKey(Color, on_delete=models.CASCADE, blank=True, null=True)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE, blank=True, null=True)
+    image_id = models.IntegerField(blank=True, null=True, default=0)
+    quantity = models.IntegerField(default=1)
+    price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+
+    def __str__(self):
+        return self.title
+
+    def image(self):
+        img = Images.objects.get(id=self.image_id)
+        if img.id is not None:
+            varimage = img.imgae.url
+        else: 
+            varimage = ""
+        return varimage
+    
+    def image_tag(self):
+        img = Images.objects.get(id=self.image_id)
+        if img.id is not None:
+            return mark_safe('<img src="{}" height="50"/>'.format(img.image.url))
+        else: 
+            return ""
