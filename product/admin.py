@@ -3,7 +3,9 @@ from django.db.models.expressions import Col
 from mptt.admin import DraggableMPTTAdmin
 # Register your models here.
 from .models import Category, Product, Images, Comment, Color, Size, Variants
+import admin_thumbnails
 
+@admin_thumbnails.thumbnail('image')
 class ImageInLine(admin.TabularInline):
     model = Images
     readonly_fields = ('id', )
@@ -51,6 +53,10 @@ class CategoryAdmin2(DraggableMPTTAdmin):
     related_products_cumulative_count.short_description = 'Related products (in tree)'
 
 
+@admin_thumbnails.thumbnail('image')
+class ImagesAdmin(admin.ModelAdmin):
+    list_display = ['image','title','image_thumbnail']
+
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['title', 'parent', 'status']
     list_filter = ['status']
@@ -79,7 +85,7 @@ class VariantsAdmin(admin.ModelAdmin):
 
 admin.site.register(Category, CategoryAdmin2)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Images)
+admin.site.register(Images, ImagesAdmin)
 admin.site.register(Color, ColorAdmin)
 admin.site.register(Size, SizeAdmin)
 admin.site.register(Variants, VariantsAdmin)

@@ -1,5 +1,6 @@
+from django.contrib.admin.sites import site
 from django.http.response import HttpResponse
-from product.models import Category, Comment, Product, Images
+from product.models import Category, Comment, Product, Images, Variants
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -76,6 +77,27 @@ def product_detail(request, id, slug):
     comment = Comment.objects.filter(product_id=id, status=True)
     cmt_count = Comment.objects.filter(product_id=id, status=True).count()
     context = {'product': product, 'category': category, 'images': images, 'comment': comment, 'cmt_count': cmt_count}
+
+    if product.variant != "None":
+        if request.method == "POST":
+            variant_id = request.POST.get('variantid')
+            variant = Variants.objects.get(id=variant_id)
+            colors = Variants.objects.filter(product_id=id, size_id=variant.size_id)
+            print(colors)
+            sizes = Variants.objects.raw('SELECT * FROM produvt_variants WHERE product_id=%s GROUP BY size_id',[id])
+            print(sizes)
+        else:
+            variants = Variants.objects.filter(product_id=id)
+            colors = Variants.objects.filter(product_id=id, size_id=variants[0].size_id)
+            sizes = Variants.objects.raw('SELECT * FROM produvt_variants WHERE product_id=%s GROUP BY size_id'[id])
+            variant = Variants.objects.get(id=variants[0].id)
+        
+        context.update({'sizes': sizes, 'colors': colors, 'variant': variant})
+
+
+
+
+
     return render(request, 'product_detail.html', context)
 
 
