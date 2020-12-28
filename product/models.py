@@ -165,7 +165,7 @@ class Variants(models.Model):
     def image(self):
         img = Images.objects.get(id=self.image_id)
         if img.id is not None:
-            varimage = img.imgae.url
+            varimage = img.image.url
         else: 
             varimage = ""
         return varimage

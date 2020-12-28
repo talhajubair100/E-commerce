@@ -42,6 +42,7 @@ urlpatterns = [
     path('login/', UserViews.login_view, name='login_view'),
     path('logout/', UserViews.logout_view, name='logout_view'),
     path('signup/', UserViews.signup_view, name='signup_view'),
+    path('ajaxcolor/', views.ajaxcolor, name='ajaxcolor'),
 
 
     
