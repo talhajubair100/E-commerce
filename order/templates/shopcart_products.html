@@ -60,8 +60,8 @@
 									<td class="details">
 										<a href="/product/{{ item.product.id }}/{{ item.product.slug }}">{{ item.product.title }}</a>
 										<ul>
-											<li><span>Size: XL</span></li>
-											<li><span>Color: Camelot</span></li>
+											<li><span>Size: {{ item.variant.size }}</span></li>
+											<li><span>Color: {{ item.variant.color }}</span></li>
 										</ul>
 									</td>
 									<td class="price text-center"><strong>

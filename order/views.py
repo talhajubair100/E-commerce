@@ -7,8 +7,7 @@ from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from .forms import ShopCartForm, OrderForm, CardInfoForm
-from product.models import Category, Product
-
+from product.models import Category, Product, Variants
 from django.utils.crypto import get_random_string
 
 # Create your views here.
@@ -78,10 +77,15 @@ def shopcart(request):
     category = Category.objects.all()
     current_user = request.user
     shopcart = ShopCart.objects.filter(user_id=current_user.id)
-    total = 0
+    total=0
     for rs in shopcart:
-        total += rs.product.price * rs.quantity 
-       
+        if rs.product.variant == 'None':
+            total += rs.product.price * rs.quantity 
+        else:
+            total += rs.variant.price * rs.quantity
+        
+
+    print(total)   
 
     context = { 'category': category, 'shopcart': shopcart, 'total': total}
     return render(request, 'shopcart_products.html', context)
@@ -103,8 +107,11 @@ def orderproduct(request):
     shopcart = ShopCart.objects.filter(user_id=current_user.id)
     total = 0
     for rs in shopcart:
-        total += rs.product.price * rs.quantity 
-    
+        if rs.product.variant == 'None':
+            total += rs.product.price * rs.quantity 
+        else:
+            total += rs.variant.price * rs.quantity 
+
     
     #form2 = CardInfoForm()
     if request.method == 'POST':
@@ -130,14 +137,24 @@ def orderproduct(request):
                 detail.product_id = pro.product_id
                 detail.user_id = current_user.id
                 detail.quantity = pro.quantity
-                detail.price = pro.product.price
+                if pro.product.variant == 'None':
+                    detail.price = pro.product.price
+                else:
+                    detail.price = pro.variant.price
+                detail.variant_id = pro.variant_id
                 detail.amount = pro.amount
                 detail.save()
 
                 ########
-                product = Product.objects.get(id=pro.product_id)
-                product.amount -= pro.quantity
-                product.save()
+                if pro.product.variant == 'None':
+                    product = Product.objects.get(id=pro.product_id)
+                    product.amount -= pro.quantity
+                    product.save()
+                else:
+                    variant = Variants.objects.get(id=pro.variant_id)
+                    variant.quantity -= pro.quantity
+                    variant.save()
+
 
             ShopCart.objects.filter(user_id=current_user.id).delete()
             request.session['cart_items']=0

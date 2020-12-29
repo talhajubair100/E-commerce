@@ -81,22 +81,28 @@
 
                         <table class="shopping-cart-table table">
                             <tr>
-                                <th class="text-left">Image</th>
-                                <th class="text-left">Product Name </th>
-                                <th class="text-left">Price </th>
-                                <th class="text-left">Qauatity </th>
-                                <th class="text-left">Amount </th>
-                                <th class="text-left">Status </th>
-                                <th class="text-left">Date </th>
+                                <th class="text-center"> Image</th>
+                                <th class="text-center"> Product Name </th>
+                                <th class="text-center"> Price </th>
+                                <th class="text-center"> Qauatity </th>
+                                <th class="text-center"> Amount </th>
+                                <th class="text-center"> Status </th>
+                                <th class="text-center"> Date </th>
                             </tr>
                             {% for item in orderitems %}
                                 <tr>
                                     <td class="text-left">
                                         <a href="/product/{{ item.product_id }}/{{ item.product.slug }}">
+                                            {% if item.variant.image_id > 0 %}
+                                            <img src="{{ item.variant.image }}" alt="" style="height: 50px">
+                                            {% else %}
                                             <img src="{{item.product.image.url}}" alt="" style="height: 50px">
+                                            {% endif %}
+											
+                                            
                                         </a>
                                     </td>
-                                    <td class="text-left">{{ item.product.title}}</td>
+                                    <td class="text-left">{{ item.product.title}} {{ item.variant.size}} {{ item.variant.color}}</td>
                                     <td class="text-left">{{ item.price}} </td>
                                     <td class="text-left"> X {{ item.quantity}} </td>
                                     <td class="text-left">{{ item.amount}} </td>

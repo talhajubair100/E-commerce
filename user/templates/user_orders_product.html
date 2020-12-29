@@ -57,12 +57,16 @@
                                 <tr>
                                     <td class="text-left">
                                         <a href="/product/{{ item.product_id }}/{{ item.product.slug }}">
+                                            {% if item.variant.image_id > 0 %}
+                                            <img src="{{ item.variant.image }}" alt="" style="height: 50px">
+                                            {% else %}
                                             <img src="{{item.product.image.url}}" alt="" style="height: 50px">
+                                            {% endif %}
                                         </a>
                                     </td>
-                                    <td class="text-left">{{ item.product.title}}</td>
+                                    <td class="text-left">{{ item.product.title}} {{ item.variant.size}} {{ item.variant.color}}</td>
                                     <td class="text-left">{{ item.price}} </td>
-                                    <td class="text-left">{{ item.quantity}} </td>
+                                    <td class="text-left"> X {{ item.quantity}} </td>
                                     <td class="text-left">{{ item.amount}} </td>
                                     <td class="text-left">{{ item.status}} </td>
                                     <td class="text-left">{{ item.create_at}} </td>
