@@ -19,25 +19,39 @@ def order(request):
 def add_to_shopcart(request, id):
     url = request.META.get('HTTP_REFERER')
     current_user = request.user
+    product = Product.objects.get(pk=id)
 
-    checkproduct = ShopCart.objects.filter(product_id=id)
-    
-    if checkproduct:
-        control = 1
+    if product.variant != 'None':
+        variantid = request.POST.get('variantid')
+        checkvariant = ShopCart.objects.filter(variant_id=variantid, user_id=current_user.id)
+        if checkvariant:
+            control = 1
+        else:
+            control = 0 
     else:
-        control = 0 
+        checkproduct = ShopCart.objects.filter(product_id=id, user_id=current_user.id)
+        if checkproduct:
+            control = 1
+        else:
+            control = 0 
 
     if request.method == 'POST':
+        variantid = request.POST.get('variantid')
         form = ShopCartForm(request.POST)
         if form.is_valid():
             if control==1:
-                data = ShopCart.objects.get(product_id=id)
+                if product.variant == 'None':
+                    data = ShopCart.objects.get(product_id=id, user_id=current_user.id)
+                else:
+                    data = ShopCart.objects.get(product_id=id, variant_id=variantid, user_id=current_user.id)
+
                 data.quantity += form.cleaned_data['quantity']
                 data.save()
             else:
                 data = ShopCart()
                 data.user_id = current_user.id
                 data.product_id = id
+                data.variant_id = variantid
                 data.quantity = form.cleaned_data['quantity']
                 data.save()
         messages.success(request, "Product added to Shopcart")
@@ -45,7 +59,7 @@ def add_to_shopcart(request, id):
 
     else:
         if control==1:
-            data = ShopCart.objects.get(product_id=id)
+            data = ShopCart.objects.get(product_id=id, user_id=current_user.id)
             data.quantity += 1
             data.save()
         else:
@@ -53,6 +67,7 @@ def add_to_shopcart(request, id):
             data.user_id = current_user.id
             data.product_id = id
             data.quantity = 1
+            data.variant_id = None
             data.save()
         messages.success(request, "Product added to Shopcart")
         return HttpResponseRedirect(url)
