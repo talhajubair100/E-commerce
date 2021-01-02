@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
-
+from django.conf.urls.i18n import i18n_patterns 
+from django.utils.translation import gettext_lazy as _
 import home
 from home.views import about
 from home import views
@@ -26,7 +26,7 @@ from user import views as UserViews
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(_('admin/'), admin.site.urls),
     path('', include('home.urls')),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
@@ -43,7 +43,7 @@ urlpatterns = [
     path('logout/', UserViews.logout_view, name='logout_view'),
     path('signup/', UserViews.signup_view, name='signup_view'),
     path('ajaxcolor/', views.ajaxcolor, name='ajaxcolor'),
-
+    path('i18n/', include('django.conf.urls.i18n')),
 
     
 
