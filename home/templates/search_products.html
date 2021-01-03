@@ -7,6 +7,7 @@
 
 {% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
 {% block body %} 
+{% load currency %}
 
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
@@ -76,11 +77,11 @@
 							<div class="col-md-3 col-sm-6 col-xs-6">
 								<div class="product product-single">
 									<div class="product-thumb">
-										<a href="/product/{{ product.id }}/{{ product.slug }}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
+										<a href="{% url 'product_detail' product.id product.slug %}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
 										<img src="{{ product.image.url }}" alt="" style="height: 250px;">
 									</div>
 									<div class="product-body">
-										<h3 class="product-price">$ {{ product.price }}</h3>
+										<h3 class="product-price">$ {{ product.price|currency:request.session.currency }} {{request.session.currency}}</h3>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -88,17 +89,16 @@
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star-o empty"></i>
 										</div>
-										<h2 class="product-name"><a href="/product/{{ product.id }}/{{ product.slug }}">{{ product.title }}</a></h2>
+										<h2 class="product-name"><a href="{% url 'product_detail' product.id product.slug %}">{{ product.title }}</a></h2>
 										<div class="product-btns">
 											<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 											<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-											<a href="/order/add_to_shopcart/{{ product.id }}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+											<a href="{% url 'add_to_shopcart' product.id %}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
 										</div>
 									</div>
 								</div>
 							</div>
-							<br>
-
+							
                             {% endfor %}
 
                             
