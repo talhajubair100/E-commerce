@@ -44,6 +44,8 @@ urlpatterns = [
     path('signup/', UserViews.signup_view, name='signup_view'),
     path('ajaxcolor/', views.ajaxcolor, name='ajaxcolor'),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('currencies/', include('currencies.urls')),
+    path('selectcurrency', views.selectcurrency, name='selectcurrency'),
 
     
 

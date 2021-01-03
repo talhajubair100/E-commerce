@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.admin.sites import site
 from django.http.response import HttpResponse, JsonResponse
 from product.models import Category, Comment, Product, Images, Variants
@@ -12,6 +13,9 @@ from django.template.loader import render_to_string
 
 # Create your views here.
 def index(request):
+    
+    if not request.session.has_key('currency'):
+        request.session['currency'] = settings.DEFAULT_CURRENCY
     setting = Setting.objects.get(pk=1)
     category = Category.objects.all()
     product_slider = Product.objects.all().order_by('-id')[:3] #first 4 products
@@ -112,6 +116,12 @@ def ajaxcolor(request):
         return JsonResponse(data)
     return JsonResponse(data)
 
+
+def selectcurrency(request):
+    lasturl = request.META.get('HTTP_REFERER')
+    if request.method == 'POST':
+        request.session['currency'] = request.POST['currency']
+    return HttpResponseRedirect(lasturl)
 
 # def search(request):
 #     if request.method == 'POST': # check post

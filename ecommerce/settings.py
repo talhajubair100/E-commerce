@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'order',
     'user',
     'modeltranslation',
+    'currencies',
 
 
 
@@ -75,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'currencies.context_processors.currencies',
                 
             ],
         },
@@ -134,6 +136,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+DEFAULT_CURRENCY = 'USD'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

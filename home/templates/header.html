@@ -43,11 +43,18 @@
 							</form>
 						</li>
 						<li class="dropdown default-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">USD <i class="fa fa-caret-down"></i></a>
-							<ul class="custom-menu">
-								<li><a href="#">USD ($)</a></li>
-								<li><a href="#">EUR (€)</a></li>
-							</ul>
+							<form id="currency_switcher" method="POST" action="{% url "selectcurrency" %}">{% csrf_token %}
+								<select name="currency" onchange="$('#currency_switcher').submit()">
+								  {% for curr in CURRENCIES %}
+									<option value="{{ curr.code }}" {% ifequal curr.code request.session.currency %}selected="selected"{% endifequal %}>
+									  {{ curr.symbol }} {{ curr.name }}
+									</option>
+								  {% endfor %}
+								</select>
+								  <!-- <input type="submit" value="Set" /> -->
+							  
+							  </form>
+
 						</li>
 					</ul>
 				</div>

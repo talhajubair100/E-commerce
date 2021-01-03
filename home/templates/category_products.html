@@ -6,7 +6,9 @@
 {% block keywords %} {{ setting.keywords }} {% endblock  %}
 
 {% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
-{% block body %} 
+{% block body %}
+{% load currency %}
+
 
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
@@ -213,7 +215,7 @@
 										<img src="{{ product.image.url }}" alt="" style="height: 250px;">
 									</div>
 									<div class="product-body">
-										<h3 class="product-price">$ {{ product.price }}</h3>
+										<h3 class="product-price">$ {{ product.price|currency:request.session.currency }} {{request.session.currency}}</h3>
 										<div class="product-rating">
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
