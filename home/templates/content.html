@@ -31,10 +31,10 @@
                         <h3 class="product-price">${{ product.price|currency:request.session.currency }} {{request.session.currency}}</h3>
                         <div class="product-rating">
                             <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
-                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
-                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
-                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
-                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 2 %}-o empty{% endif %}"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 3 %}-o empty{% endif %}"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 4 %}-o empty{% endif %}"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 5 %}-o empty{% endif %}"></i>
                             {{ product.avaregereview | stringformat:".2f" }}/{{ product.counterview }}
                         </div>
                         <h2 class="product-name"><a href="{% url 'product_detail' product.id product.slug %}">{{ product.title }}</a></h2>

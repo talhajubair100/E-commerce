@@ -23,9 +23,7 @@
 
 				<div class="pull-right">
 					<ul class="header-top-links">
-						<li><a href="#">Store</a></li>
-						<li><a href="#">Newsletter</a></li>
-						<li><a href="#">FAQ</a></li>
+						<li><a href="{% url 'faq' %}">FAQ</a></li>
 						<li class="dropdown default-dropdown">
 							<form action="{% url 'set_language' %}" method="post">{% csrf_token %}
 								<input name="next" type="hidden" value="{{ redirect_to }}">
@@ -135,12 +133,12 @@
 								
 							<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
 								<div class="header-btns-icon">
-									<img src="{{ request.session.userimage }}" style="height: 40px; border-radius: 30%">
+									<img src="{{ user.userprofile.image.url }}" style="height: 40px; border-radius: 30%">
 								</div>
 								<strong class="text-uppercase">{{ user.first_name }} <i class="fa fa-caret-down"></i></strong>
 							</div>
 							{% else %}
-							<a href="{% url 'login_view' %}" class="text-uppercase">Login</a> / <a href="{% url 'signup_view' %}" class="text-uppercase">Sign Up</a>
+							<a href="{% url 'account_login' %}" class="text-uppercase">Login</a> / <a href="{% url 'account_signup' %}" class="text-uppercase">Sign Up</a>
 							{% endif %}
 							<ul class="custom-menu">
 
@@ -148,7 +146,7 @@
 								<li><a href="{% url 'user_orders' %}">My Orders</a></li>
 								<li><a href="{% url 'user_orders_product' %}">My Order Product</a></li>
 								<li><a href="{% url 'user_comments' %}">My Comments</a></li>
-								<li><a href="{% url 'logout_view' %}">Logout</a></li>
+								<li><a href="{% url 'account_logout' %}">Logout</a></li>
 							</ul>
 							
 						</li>

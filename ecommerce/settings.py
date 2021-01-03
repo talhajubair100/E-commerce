@@ -17,6 +17,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'ckeditor',
     'mptt',
     
@@ -48,9 +50,17 @@ INSTALLED_APPS = [
     'modeltranslation',
     'currencies',
 
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
 
 ]
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -95,6 +105,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+AUTHENTICATION_BACKENDS = [
+
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+   
+]
 
 
 # Password validation
@@ -147,7 +164,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 
-
 #...
 SITE_ID = 1
 
@@ -169,3 +185,4 @@ CKEDITOR_CONFIGS = {
 ###################################
 
 LOGIN_URL = 'login_view'
+LOGIN_REDIRECT_URL = '/'
