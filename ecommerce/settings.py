@@ -17,6 +17,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'ckeditor',
     'mptt',
     
@@ -46,10 +48,19 @@ INSTALLED_APPS = [
     'order',
     'user',
     'modeltranslation',
+    'currencies',
 
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
 
 ]
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,6 +86,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'currencies.context_processors.currencies',
                 
             ],
         },
@@ -93,6 +105,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+AUTHENTICATION_BACKENDS = [
+
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+   
+]
 
 
 # Password validation
@@ -134,6 +153,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+DEFAULT_CURRENCY = 'USD'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -141,7 +161,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
 
 
 
@@ -166,3 +185,4 @@ CKEDITOR_CONFIGS = {
 ###################################
 
 LOGIN_URL = 'login_view'
+LOGIN_REDIRECT_URL = '/'

@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load currency %}
 
 
 
@@ -24,24 +24,24 @@
             <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="product product-single">
                     <div class="product-thumb">
-                        <a href="/product/{{ product.id }}/{{ product.slug }}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
+                        <a href="{% url 'product_detail' product.id product.slug %}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
                         <img src="{{ product.image.url }}" alt="" style="height: 250px">
                     </div>
                     <div class="product-body">
-                        <h3 class="product-price">${{ product.price }}</h3>
+                        <h3 class="product-price">${{ product.price|currency:request.session.currency }} {{request.session.currency}}</h3>
                         <div class="product-rating">
                             <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
-                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
-                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
-                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
-                            <i class="fa fa-star{% if product.avaregereview < 1 %}-o empty{% endif %}"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 2 %}-o empty{% endif %}"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 3 %}-o empty{% endif %}"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 4 %}-o empty{% endif %}"></i>
+                            <i class="fa fa-star{% if product.avaregereview < 5 %}-o empty{% endif %}"></i>
                             {{ product.avaregereview | stringformat:".2f" }}/{{ product.counterview }}
                         </div>
-                        <h2 class="product-name"><a href="/product/{{ product.id }}/{{ product.slug }}">{{ product.title }}</a></h2>
+                        <h2 class="product-name"><a href="{% url 'product_detail' product.id product.slug %}">{{ product.title }}</a></h2>
                         <div class="product-btns">
                             <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                             <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                            <a href="/order/add_to_shopcart/{{ product.id }}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                            <a href="{% url 'add_to_shopcart' product.id %}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
                         </div>
                     </div>
                 </div>
@@ -73,11 +73,11 @@
             <div class="col-md-3 col-sm-6 col-xs-6">
                 <div class="product product-single">
                     <div class="product-thumb">
-                        <a href="/product/{{ pick_pro.id }}/{{ pick_pro.slug }}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
+                        <a href="{% url 'product_detail' pick_pro.id pick_pro.slug %}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
                         <img src="{{ pick_pro.image.url }}" alt="" style="height: 250px">
                     </div>
                     <div class="product-body">
-                        <h3 class="product-price">${{ pick_pro.price }}</h3>
+                        <h3 class="product-price">${{ pick_pro.price|currency:request.session.currency }} {{request.session.currency}}</h3>
                         <div class="product-rating">
                             <i class="fa fa-star{% if pick_pro.avaregereview < 1 %}-o empty{% endif %}"></i>
                             <i class="fa fa-star{% if pick_pro.avaregereview < 2 %}-o empty{% endif %}"></i>
@@ -86,11 +86,11 @@
                             <i class="fa fa-star{% if pick_pro.avaregereview < 5 %}-o empty{% endif %}"></i>
                             {{ pick_pro.avaregereview | stringformat:".2f" }}/{{ pick_pro.counterview }}
                         </div>
-                        <h2 class="product-name"><a href="/product/{{ pick_pro.id }}/{{ pick_pro.slug }}">{{ pick_pro.title }}</a></h2>
+                        <h2 class="product-name"><a href="{% url 'product_detail' pick_pro.id pick_pro.slug %}">{{ pick_pro.title }}</a></h2>
                         <div class="product-btns">
                             <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                             <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                            <a href="/order/add_to_shopcart/{{ product.id }}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                            <a href="{% url 'add_to_shopcart' pick_pro.id %}" class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
                         </div>
                     </div>
                 </div>

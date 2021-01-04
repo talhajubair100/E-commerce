@@ -23,9 +23,7 @@
 
 				<div class="pull-right">
 					<ul class="header-top-links">
-						<li><a href="#">Store</a></li>
-						<li><a href="#">Newsletter</a></li>
-						<li><a href="#">FAQ</a></li>
+						<li><a href="{% url 'faq' %}">FAQ</a></li>
 						<li class="dropdown default-dropdown">
 							<form action="{% url 'set_language' %}" method="post">{% csrf_token %}
 								<input name="next" type="hidden" value="{{ redirect_to }}">
@@ -43,11 +41,18 @@
 							</form>
 						</li>
 						<li class="dropdown default-dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">USD <i class="fa fa-caret-down"></i></a>
-							<ul class="custom-menu">
-								<li><a href="#">USD ($)</a></li>
-								<li><a href="#">EUR (€)</a></li>
-							</ul>
+							<form id="currency_switcher" method="POST" action="{% url "selectcurrency" %}">{% csrf_token %}
+								<select name="currency" onchange="$('#currency_switcher').submit()">
+								  {% for curr in CURRENCIES %}
+									<option value="{{ curr.code }}" {% ifequal curr.code request.session.currency %}selected="selected"{% endifequal %}>
+									  {{ curr.symbol }} {{ curr.name }}
+									</option>
+								  {% endfor %}
+								</select>
+								  <!-- <input type="submit" value="Set" /> -->
+							  
+							  </form>
+
 						</li>
 					</ul>
 				</div>
@@ -128,22 +133,20 @@
 								
 							<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
 								<div class="header-btns-icon">
-									<img src="{{ request.session.userimage }}" style="height: 40px; border-radius: 30%">
+									<img src="{{ user.userprofile.image.url }}" style="height: 40px; border-radius: 30%">
 								</div>
 								<strong class="text-uppercase">{{ user.first_name }} <i class="fa fa-caret-down"></i></strong>
 							</div>
 							{% else %}
-							<a href="{% url 'login_view' %}" class="text-uppercase">Login</a> / <a href="{% url 'signup_view' %}" class="text-uppercase">Sign Up</a>
+							<a href="{% url 'account_login' %}" class="text-uppercase">Login</a> / <a href="{% url 'account_signup' %}" class="text-uppercase">Sign Up</a>
 							{% endif %}
 							<ul class="custom-menu">
 
 								<li><a href="{% url 'user_profile' %}">User Profile</a></li>
-								<li><a href="/user/orders">My Orders</a></li>
-								<li><a href="/user/orders_product">My Order Product</a></li>
-								<li><a href="/user/comments">My Comments</a></li>
-								<li><a href="/user/favorits">My Favorits</a></li>
-								<li><a href="/user/products">My Products</a></li>
-								<li><a href="{% url 'logout_view' %}">Logout</a></li>
+								<li><a href="{% url 'user_orders' %}">My Orders</a></li>
+								<li><a href="{% url 'user_orders_product' %}">My Order Product</a></li>
+								<li><a href="{% url 'user_comments' %}">My Comments</a></li>
+								<li><a href="{% url 'account_logout' %}">Logout</a></li>
 							</ul>
 							
 						</li>
@@ -154,7 +157,7 @@
 
 <!--class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"-->
 							
-							<a href="/order/shopcart">
+							<a href="{% url 'shopcart' %}">
 								<div class="header-btns-icon">
 									<i class="fa fa-shopping-cart"></i>
 								

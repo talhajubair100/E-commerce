@@ -39,11 +39,14 @@ urlpatterns = [
     path('order/', include('order.urls')),
     path('user/', include('user.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('login/', UserViews.login_view, name='login_view'),
-    path('logout/', UserViews.logout_view, name='logout_view'),
-    path('signup/', UserViews.signup_view, name='signup_view'),
+    #path('login/', UserViews.login_view, name='login_view'),
+    #path('logout/', UserViews.logout_view, name='logout_view'),
+    #path('signup/', UserViews.signup_view, name='signup_view'),
     path('ajaxcolor/', views.ajaxcolor, name='ajaxcolor'),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('currencies/', include('currencies.urls')),
+    path('selectcurrency', views.selectcurrency, name='selectcurrency'),
+    path('accounts/', include('allauth.urls')),
 
     
 
