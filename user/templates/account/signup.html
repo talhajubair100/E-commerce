@@ -63,13 +63,6 @@
       {{ form.password2 }}
     </div>
 
-    <div class="row align-items-center remember ml-1">
-
-    <strong class="text-warning">
-    {{ form.is_company.label }}
-    </strong>
-    {{ form.is_company }}
-    </div>
   {% comment %} {{ form.as_p }} {% endcomment %}
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />

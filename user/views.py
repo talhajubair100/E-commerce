@@ -110,25 +110,25 @@ def user_delete_comment(request, id):
     return HttpResponseRedirect('user/comments/')
 
 
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            current_user = request.user
-            userprofile = UserProfile.objects.get(user_id=current_user.id)
-            request.session['userimage'] = userprofile.image.url
+# def login_view(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             current_user = request.user
+#             userprofile = UserProfile.objects.get(user_id=current_user.id)
+#             request.session['userimage'] = userprofile.image.url
 
-            return HttpResponseRedirect("/")
-        else:
-            messages.warning(request, "Login Error !! Username or Password is incorrect")
-            return HttpResponseRedirect("/login")
+#             return HttpResponseRedirect("/")
+#         else:
+#             messages.warning(request, "Login Error !! Username or Password is incorrect")
+#             return HttpResponseRedirect("/login")
 
-    category = Category.objects.all()
-    context = {'category': category}
-    return render (request, 'login.html', context)
+#     category = Category.objects.all()
+#     context = {'category': category}
+#     return render (request, 'login.html', context)
 
 def logout_view(request):
     logout(request)

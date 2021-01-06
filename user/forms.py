@@ -9,6 +9,81 @@ from django.forms.widgets import TextInput
 from .models import UserProfile
 #from django.forms import widgets
 
+class CustomeLoginForm(LoginForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomeLoginForm, self).__init__(*args, **kwargs)
+        self.fields['login'].widget.attrs.update({
+            'class': 'form-control'
+        })
+        self.fields['password'].widget.attrs.update({
+            'class': 'form-control'
+        })
+
+class CustomeSetPassForm(ResetPasswordKeyForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomeSetPassForm, self).__init__(*args, **kwargs)
+        self.fields['password1'].widget.attrs.update({
+            'class': 'form-control'
+        })
+        self.fields['password2'].widget.attrs.update({
+            'class': 'form-control'
+        })
+
+class CustomeChngPassForm(ChangePasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomeChngPassForm, self).__init__(*args, **kwargs)
+        self.fields['oldpassword'].widget.attrs.update({
+            'class': 'form-control'
+        })
+        self.fields['password1'].widget.attrs.update({
+            'class': 'form-control'
+        })
+        self.fields['password2'].widget.attrs.update({
+            'class': 'form-control'
+        })
+
+
+class CustomeResetPassForm(ResetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomeResetPassForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({
+            'class': 'form-control'
+        })
+
+class CustomeAddEmailForm(AddEmailForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomeAddEmailForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({
+            'class': 'form-control'
+        })
+
+
+class CustomeSignupForm(SignupForm):
+
+
+    def __init__(self, *args, **kwargs):
+        super(CustomeSignupForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update({
+            'class': 'form-control'
+        })
+        self.fields['username'].widget.attrs.update({
+            'class': 'form-control'
+        })
+        self.fields['password1'].widget.attrs.update({
+            'class': 'form-control'
+        })
+        self.fields['password2'].widget.attrs.update({
+            'class': 'form-control'
+        })
+
+    def save(self, request):
+        user = super(CustomeSignupForm, self).save(request)
+        
+        user_profile = UserProfile.objects.get_or_create(user=user)
+
+        return user
+        
+
 
 class UserUpdateForm(UserChangeForm):
     class Meta:

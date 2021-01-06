@@ -184,5 +184,53 @@ CKEDITOR_CONFIGS = {
 
 ###################################
 
-LOGIN_URL = 'login_view'
+
+#django-allauth registraion settings
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS =1
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+
+# 1 day
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
+
+#or any other page
+#ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = True
+
+ACCOUNT_FORMS = {
+    "login": "user.forms.CustomeLoginForm",
+    "signup": "user.forms.CustomeSignupForm",
+    "reset_password": "user.forms.CustomeResetPassForm",
+    'reset_password_from_key': "user.forms.CustomeSetPassForm",
+    "change_password": "user.forms.CustomeChngPassForm",
+    "add_email": "user.forms.CustomeAddEmailForm",
+    "custome_signup": "user.froms.CustomeCompanySignupForm",
+
+
+
+    # "add_email": "allauth.account.forms.AddEmailForm",
+    # "change_password": "allauth.account.forms.ChangePasswordForm",
+    # "set_password": "allauth.account.forms.SetPasswordForm",
+    # "reset_password": "allauth.account.forms.ResetPasswordForm",
+    # "reset_password_from_key": "allauth.account.forms.ResetPasswordKeyForm",
+    # "disconnect": "allauth.socialaccount.forms.DisconnectForm",
+    # # Use our custom signup form
+}
+
+
+
+# SMTP Config
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'workit600.bd@gmail.com'
+EMAIL_HOST_PASSWORD = '*************'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'workit600.bd@gmail.com'
+
+
+#LOGIN_URL = 'login_view'
 LOGIN_REDIRECT_URL = '/'
